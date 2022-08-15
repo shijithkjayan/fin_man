@@ -10,6 +10,12 @@ import Config
 config :sanchayika,
   ecto_repos: [Sanchayika.Repo]
 
+# Repo configs
+config :sanchayika, Sanchayika.Repo,
+  migration_timestamps: [
+    type: :utc_datetime
+  ]
+
 # Configures the endpoint
 config :sanchayika, SanchayikaWeb.Endpoint,
   url: [host: "localhost"],
