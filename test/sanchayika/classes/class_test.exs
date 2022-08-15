@@ -43,9 +43,12 @@ defmodule Sanchayika.Classes.ClassTest do
 
     test "validates class_name is unique" do
       _ = Repo.insert!(%Class{class_name: "2Q"})
-      assert {:error, changeset} = %Class{} |> Class.changeset(%{class_name: "2Q"}) |> Repo.insert()
 
-      assert %{class_name: ["has already been taken"]} = traverse_errors(changeset, fn {msg, _opts} -> msg end)
+      assert {:error, changeset} =
+               %Class{} |> Class.changeset(%{class_name: "2Q"}) |> Repo.insert()
+
+      assert %{class_name: ["has already been taken"]} =
+               traverse_errors(changeset, fn {msg, _opts} -> msg end)
     end
   end
 end
