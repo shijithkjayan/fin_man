@@ -1,5 +1,5 @@
 defmodule Sanchayika.Classes.ClassTest do
-  use ExUnit.Case
+  use Sanchayika.DataCase
 
   alias Sanchayika.Classes.Class
   import Ecto.Changeset, only: [traverse_errors: 2]
@@ -39,6 +39,13 @@ defmodule Sanchayika.Classes.ClassTest do
 
       assert %{class_name: ["class name should contain class followed by division in caps"]} =
                traverse_errors(changeset2, fn {msg, _opts} -> msg end)
+    end
+
+    test "validates class_name is unique" do
+      _ = Repo.insert!(%Class{class_name: "2Q"})
+      assert {:error, changeset} = %Class{} |> Class.changeset(%{class_name: "2Q"}) |> Repo.insert()
+
+      assert %{class_name: ["has already been taken"]} = traverse_errors(changeset, fn {msg, _opts} -> msg end)
     end
   end
 end

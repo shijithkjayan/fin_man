@@ -13,6 +13,7 @@ defmodule Sanchayika.Classes.Class do
     class
     |> cast(params, [:class_name])
     |> validate_required([:class_name])
+    |> unique_constraint([:class_name], name: :class_name_unique_index)
     |> validate_format(:class_name, ~r/[1-4][A-Z]/,
       message: "class name should contain class followed by division in caps"
     )
