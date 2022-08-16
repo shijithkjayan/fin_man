@@ -1,4 +1,8 @@
 defmodule Sanchayika.Schema do
+  @moduledoc """
+  Custom schema which defines primary key
+  and foreign keys as UUID.
+  """
   defmacro __using__(_) do
     quote do
       use Ecto.Schema

@@ -50,7 +50,8 @@ defmodule Sanchayika.MixProject do
       {:plug_cowboy, "~> 2.5"},
 
       # External dependecies
-      {:timex, "~> 3.7"}
+      {:timex, "~> 3.7"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
