@@ -2,19 +2,8 @@ name: Pull Request Action
 on: [push]
 jobs:
   build:
-    name: Build and test
+    name: Build
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:14.5-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_DB: sanchayika_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-    env:
-      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/sanchayika_test"
     steps:
       - uses: actions/checkout@v3
       - name: Set up Elixir
@@ -32,5 +21,29 @@ jobs:
         run: mix deps.get
       - name: Compile code
         run: mix compile --warnings-as-errors
+  credo-checks:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Format check
+        run: mix format --check-formatted
+      - name: Static code analysis
+        run: mix credo
+  test:
+    needs: build
+    name: Unit tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.5-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: sanchayika_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    env:
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/sanchayika_test"
+    steps:
       - name: Run tests
         run: mix test
