@@ -22,6 +22,7 @@ jobs:
       - name: Compile code
         run: mix compile --warnings-as-errors
   credo-checks:
+    name: Credo
     needs: build
     runs-on: ubuntu-latest
     steps:
