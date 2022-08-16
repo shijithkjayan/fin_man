@@ -26,6 +26,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Format check
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: '1.13.4'
+          otp-version: '25.0'
         run: mix format --check-formatted
       - name: Static code analysis
         run: mix credo
@@ -46,4 +50,8 @@ jobs:
       DATABASE_URL: "postgres://postgres:postgres@localhost:5432/sanchayika_test"
     steps:
       - name: Run tests
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: '1.13.4'
+          otp-version: '25.0'
         run: mix test
