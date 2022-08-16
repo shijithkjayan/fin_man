@@ -3,7 +3,6 @@ defmodule Sanchayika.Years.Year do
   Schema for academic years.
   """
   use Sanchayika.Schema
-  @academic_year_validation_error "end year should be the next year of start year"
 
   schema "academic_year" do
     field :start_year, :integer
@@ -23,12 +22,10 @@ defmodule Sanchayika.Years.Year do
     start_year = get_change(changeset, :start_year)
     end_year = get_change(changeset, :end_year)
 
-    cond do
-      start_year == end_year - 1 ->
-        changeset
-
-      true ->
-        add_error(changeset, :start_year, @academic_year_validation_error)
+    if start_year == end_year - 1 do
+      changeset
+    else
+      add_error(changeset, :start_year, "end year should be the next year of start year")
     end
   end
 
