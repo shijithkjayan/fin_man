@@ -20,10 +20,11 @@ defmodule SanchayikaWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SanchayikaWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SanchayikaWeb do
+    pipe_through :api
+
+    resources "/classes", ClassController, except: [:new, :edit]
+  end
 
   # Enables LiveDashboard only for development
   #
