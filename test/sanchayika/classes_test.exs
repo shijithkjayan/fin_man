@@ -13,7 +13,7 @@ defmodule Sanchayika.ClassesTest do
     assert Classes.list_class() == [class]
   end
 
-  describe "get_class/1" do
+  describe "get_class!/1" do
     test "returns the class with given id" do
       class = class_fixture(class_name: "1A")
       assert Classes.get_class!(class.id) == class

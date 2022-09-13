@@ -33,12 +33,17 @@ defmodule Sanchayika.Classes.ClassTest do
     test "validates class_name contains a number followed by an alphabet only" do
       changeset1 = Class.changeset(%Class{}, %{class_name: "1A"})
       changeset2 = Class.changeset(%Class{}, %{class_name: "1"})
+      changeset3 = Class.changeset(%Class{}, %{class_name: "1AA"})
 
       assert changeset1.valid?
       refute changeset2.valid?
+      refute changeset3.valid?
 
       assert %{class_name: ["class name should contain class followed by division in caps"]} =
                traverse_errors(changeset2, fn {msg, _opts} -> msg end)
+
+      assert %{class_name: ["class name should contain class followed by division in caps"]} =
+               traverse_errors(changeset3, fn {msg, _opts} -> msg end)
     end
 
     test "validates class_name is unique" do
