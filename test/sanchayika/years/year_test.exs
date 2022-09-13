@@ -1,4 +1,4 @@
-defmodule Sanchayika.Years.YearsTest do
+defmodule Sanchayika.Years.YearTest do
   use ExUnit.Case
 
   import Ecto.Changeset, only: [traverse_errors: 2]
@@ -17,7 +17,7 @@ defmodule Sanchayika.Years.YearsTest do
       assert changeset.valid?
     end
 
-    test "creates invalid changeset with valid params" do
+    test "creates invalid changeset with invalid params" do
       changeset = Year.changeset(%Year{}, %{start_year: "asdf", end_year: "ghjk"})
 
       refute changeset.valid?
@@ -30,6 +30,17 @@ defmodule Sanchayika.Years.YearsTest do
 
       assert %{start_year: ["can't be blank"], end_year: ["can't be blank"]} =
                traverse_errors(changeset, fn {msg, _opts} -> msg end)
+    end
+
+    test "validates start_year and end_year must be b/w 2021 and 10000" do
+      changeset = Year.changeset(%Year{}, %{start_year: 22, end_year: 10_001})
+
+      refute changeset.valid?
+
+      assert %{
+               end_year: ["year must be between 2021 and 10000"],
+               start_year: ["year must be between 2021 and 10000"]
+             } = traverse_errors(changeset, fn {msg, _opts} -> msg end)
     end
 
     test "validates end_year is the next year after start_year" do

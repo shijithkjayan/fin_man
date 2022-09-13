@@ -16,7 +16,7 @@ defmodule SanchayikaWeb.ClassControllerTest do
   end
 
   describe "index" do
-    test "lists empty list when there are no classes created", %{conn: conn} do
+    test "returns empty list when there are no classes created", %{conn: conn} do
       conn = get(conn, Routes.class_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
