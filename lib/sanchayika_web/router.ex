@@ -24,7 +24,8 @@ defmodule SanchayikaWeb.Router do
     pipe_through :api
 
     resources "/classes", ClassController, except: [:new, :edit]
-    resources "/year", YearController, except: [:new, :edit]
+    resources "/years", YearController, except: [:new, :edit]
+    resources "/students", StudentController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

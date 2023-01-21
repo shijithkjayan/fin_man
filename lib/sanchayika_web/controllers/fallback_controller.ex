@@ -14,6 +14,13 @@ defmodule SanchayikaWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, :error) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(SanchayikaWeb.ErrorView)
+    |> render(:"400")
+  end
+
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
