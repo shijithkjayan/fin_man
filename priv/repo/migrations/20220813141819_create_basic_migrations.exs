@@ -5,7 +5,7 @@ defmodule Sanchayika.Repo.Migrations.CreateBasicMigrations do
     create table(:student, primary_key: false) do
       add :id, :uuid, primary_key: true
       add :name, :string
-      add :total_balance, :decimal, default: 0.0, precisio: 2
+      add :total_balance, :float, default: 0.0
 
       timestamps()
     end
@@ -25,10 +25,10 @@ defmodule Sanchayika.Repo.Migrations.CreateBasicMigrations do
       timestamps()
     end
 
-    create table(:student_class_year, primary_key: false) do
-      add :student_id, references(:student, type: :uuid)
-      add :class_id, references(:class, type: :uuid)
-      add :academic_year_id, references(:academic_year, type: :uuid)
+    create table(:academic_history, primary_key: false) do
+      add :student_id, references(:student, type: :uuid, on_delete: :delete_all)
+      add :class_id, references(:class, type: :uuid, on_delete: :nilify_all)
+      add :academic_year_id, references(:academic_year, type: :uuid, on_delete: :nilify_all)
     end
   end
 

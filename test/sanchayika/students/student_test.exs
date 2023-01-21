@@ -42,5 +42,14 @@ defmodule Sanchayika.Students.StudentTest do
       assert %{name: ["is invalid"], total_balance: ["is invalid"]} =
                traverse_errors(changeset, fn {msg, _opts} -> msg end)
     end
+
+    test "validates total_balance is not negative value" do
+      changeset = Student.changeset(%Student{}, %{name: 1, total_balance: -0.1})
+
+      refute changeset.valid?
+
+      assert %{total_balance: ["must be a positive value"]} =
+               traverse_errors(changeset, fn {msg, _opts} -> msg end)
+    end
   end
 end
