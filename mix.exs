@@ -53,7 +53,10 @@ defmodule Sanchayika.MixProject do
       # External dependecies
       {:timex, "~> 3.7"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:faker, "~> 0.17.0"}
+      {:faker, "~> 0.17.0"},
+
+      # TDD
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
