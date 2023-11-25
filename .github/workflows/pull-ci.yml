@@ -72,7 +72,7 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: sanchayika_test
+          POSTGRES_DB: fin_man_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
     steps:

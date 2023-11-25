@@ -1,4 +1,4 @@
-# Sanchayika
+# FinMan
 
 To start your Phoenix server:
 

@@ -7,20 +7,20 @@
 # General application configuration
 import Config
 
-config :sanchayika,
-  ecto_repos: [Sanchayika.Repo]
+config :fin_man,
+  ecto_repos: [FinMan.Repo]
 
 # Repo configs
-config :sanchayika, Sanchayika.Repo,
+config :fin_man, FinMan.Repo,
   migration_timestamps: [
     type: :utc_datetime
   ]
 
 # Configures the endpoint
-config :sanchayika, SanchayikaWeb.Endpoint,
+config :fin_man, FinManWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: SanchayikaWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Sanchayika.PubSub,
+  render_errors: [view: FinManWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: FinMan.PubSub,
   live_view: [signing_salt: "hTpIOhLK"]
 
 # Configures the mailer
@@ -30,7 +30,7 @@ config :sanchayika, SanchayikaWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :sanchayika, Sanchayika.Mailer, adapter: Swoosh.Adapters.Local
+config :fin_man, FinMan.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

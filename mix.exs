@@ -1,9 +1,9 @@
-defmodule Sanchayika.MixProject do
+defmodule FinMan.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :sanchayika,
+      app: :FinMan,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Sanchayika.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Sanchayika.Application, []},
+      mod: {FinMan.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -54,6 +54,9 @@ defmodule Sanchayika.MixProject do
       {:timex, "~> 3.7"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.17.0"},
+      # Password encryption
+      {:comeonin, "~> 5.3.2"},
+      {:bcrypt_elixir, "~> 3.0.1"},
 
       # TDD
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
