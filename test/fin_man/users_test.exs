@@ -1,17 +1,14 @@
 defmodule FinMan.UsersTest do
-  use FinMan.DataCase
+  use FinMan.DataCase, async: true
   use FinMan.Fixtures
 
-  alias FinMan.Users.AcademicHistory
   alias FinMan.Users
   alias FinMan.Users.User
-
-  import ExUnit.CaptureLog
 
   @invalid_attrs %{name: nil, email: 2}
 
   setup do
-    user = insert(:user, name: "John Doe", email: "john@finman.com", password: "123123123")
+    user = user_fixture(name: "John Doe", email: "john@finman.com", password: "123123123")
     {:ok, %{user: user}}
   end
 
@@ -59,9 +56,10 @@ defmodule FinMan.UsersTest do
       assert user.email == update_attrs.email
     end
 
-    test "with invalid data returns error changeset", %{user: %{name: name, email: email} = user} do
+    test "with invalid data returns error changeset", %{user: user} do
+      %{name: name, email: email} = user
       assert {:error, %Ecto.Changeset{}} = Users.update_user(user, @invalid_attrs)
-      assert %User{name: ^name, email: ^email} == Users.get_user!(user.id)
+      assert %User{name: ^name, email: ^email} = Users.get_user!(user.id)
     end
   end
 
@@ -72,5 +70,9 @@ defmodule FinMan.UsersTest do
 
   test "change_user/1 returns a user changeset", %{user: user} do
     assert %Ecto.Changeset{} = Users.change_user(user)
+  end
+
+  test "update_change_user/1 returns a user update changeset", %{user: user} do
+    assert %Ecto.Changeset{} = Users.update_change_user(user)
   end
 end

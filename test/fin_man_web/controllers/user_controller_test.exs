@@ -1,8 +1,6 @@
 defmodule FinManWeb.UserControllerTest do
-  use FinManWeb.ConnCase
+  use FinManWeb.ConnCase, async: true
   use FinMan.Fixtures
-
-  alias FinMan.Users.User
 
   @create_attrs %{
     name: "John Doe",
@@ -26,10 +24,8 @@ defmodule FinManWeb.UserControllerTest do
 
   describe "create user" do
     test "renders user when data is valid", %{conn: conn} do
-      name = @create_attrs.name
-      email = @create_attrs.email
-
       conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
+      assert response(conn, 201)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -42,24 +38,23 @@ defmodule FinManWeb.UserControllerTest do
     setup [:create_user]
 
     test "renders user with valid ID", %{conn: conn, user: user} do
-      %User{id: id, name: name, email: email} = user
-      conn = get(conn, Routes.user_path(conn, :show, id))
+      conn = get(conn, Routes.user_path(conn, :show, user.id))
+      assert response(conn, 200)
     end
 
     test "renders errors when user not found", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :show, Ecto.UUID.generate()))
 
-      assert "Not Found" = json_response(conn, 404)
+      assert "Not Found" = response(conn, 404)
     end
   end
 
   describe "update user" do
     setup [:create_user]
 
-    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-      name = @update_attrs.name
-      email = @update_attrs.email
+    test "renders user when data is valid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
+      assert response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do
@@ -76,13 +71,13 @@ defmodule FinManWeb.UserControllerTest do
       assert response(conn, 204)
 
       conn = get(conn, Routes.user_path(conn, :show, user))
-      assert "Not Found" = json_response(conn, 404)
+      assert "Not Found" = response(conn, 404)
     end
 
     test "renders errors when user not found", %{conn: conn} do
       conn = delete(conn, Routes.user_path(conn, :delete, Ecto.UUID.generate()))
 
-      assert "Not Found" = json_response(conn, 404)
+      assert "Not Found" = response(conn, 404)
     end
   end
 

@@ -49,7 +49,7 @@ defmodule FinMan.Users do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> change_user(attrs)
+    |> update_change_user(attrs)
     |> Repo.update()
   end
 
@@ -77,6 +77,19 @@ defmodule FinMan.Users do
 
   """
   def change_user(%User{} = user, attrs \\ %{}) do
-    user.changeset(user, attrs)
+    User.changeset(user, attrs)
+  end
+
+  @doc """
+  Returns a data structure for tracking user update changes.
+
+  ## Examples
+
+      iex> update_change_user(user)
+      %Todo{...}
+
+  """
+  def update_change_user(%User{} = user, attrs \\ %{}) do
+    User.update_changeset(user, attrs)
   end
 end

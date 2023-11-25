@@ -3,7 +3,7 @@ defmodule FinMan.MixProject do
 
   def project do
     [
-      app: :FinMan,
+      app: :fin_man,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),

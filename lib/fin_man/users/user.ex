@@ -21,6 +21,13 @@ defmodule FinMan.Users.User do
     |> generate_encrypted_password
   end
 
+  def update_changeset(%__MODULE__{} = user, params \\ %{}) do
+    user
+    |> cast(params, [:name, :email])
+    |> validate_required([:name, :email])
+    |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)
+  end
+
   defp generate_encrypted_password(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->

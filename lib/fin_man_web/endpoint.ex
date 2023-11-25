@@ -1,5 +1,5 @@
 defmodule FinManWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :FinMan
+  use Phoenix.Endpoint, otp_app: :fin_man
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -18,7 +18,7 @@ defmodule FinManWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :FinMan,
+    from: :fin_man,
     gzip: false,
     only: FinManWeb.static_paths()
 
@@ -28,7 +28,7 @@ defmodule FinManWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :FinMan
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :fin_man
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,

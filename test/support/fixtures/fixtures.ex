@@ -5,7 +5,6 @@ defmodule FinMan.Fixtures do
   defmacro __using__(_) do
     quote do
       import FinMan.UsersFixtures
-      import FinMan.TransactionsFixtures
     end
   end
 end
