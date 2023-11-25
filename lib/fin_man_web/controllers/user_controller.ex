@@ -7,11 +7,12 @@ defmodule FinManWeb.UserController do
   action_fallback FinManWeb.FallbackController
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Users.create_user(user_params) do
-      conn
-      |> put_resp_header("location", ~p"/users/#{user}")
-      |> resp(:created, "User created")
-    else
+    case Users.create_user(user_params) do
+      {:ok, %User{} = user} ->
+        conn
+        |> put_resp_header("location", ~p"/users/#{user}")
+        |> resp(:created, "User created")
+
       _error ->
         :error
     end
