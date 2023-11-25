@@ -1,41 +1,32 @@
-defmodule Sanchayika.Repo.Migrations.CreateBasicMigrations do
+defmodule FinMan.Repo.Migrations.CreateBasicMigrations do
   use Ecto.Migration
 
   def up do
-    create table(:student, primary_key: false) do
+    create table(:user, primary_key: false) do
       add :id, :uuid, primary_key: true
       add :name, :string
-      add :total_balance, :float, default: 0.0
+      add :email, :string
+      add :encrypted_password, :string
 
       timestamps()
     end
 
-    create table(:class, primary_key: false) do
+    create table(:account, primary_key: false) do
       add :id, :uuid, primary_key: true
-      add :class_name, :string
+      add :user_id, references(:user, type: :uuid, on_delete: :nilify_all)
+      add :name, :string
+      add :balance, :integer, default: 0
+      add :meta, :map, default: %{}
 
       timestamps()
     end
 
-    create table(:academic_year, primary_key: false) do
-      add :id, :uuid, primary_key: true
-      add :start_year, :integer
-      add :end_year, :integer
-
-      timestamps()
-    end
-
-    create table(:academic_history, primary_key: false) do
-      add :student_id, references(:student, type: :uuid, on_delete: :delete_all)
-      add :class_id, references(:class, type: :uuid, on_delete: :nilify_all)
-      add :academic_year_id, references(:academic_year, type: :uuid, on_delete: :nilify_all)
-    end
+    create unique_index(:user, [:email])
+    create unique_index(:account, [:user_id, :name])
   end
 
   def down do
-    drop_if_exists(table(:student_class_year))
-    drop_if_exists(table(:academic_year))
-    drop_if_exists(table(:class))
-    drop_if_exists(table(:student))
+    drop_if_exists(table(:account))
+    drop_if_exists(table(:user))
   end
 end
